@@ -17,12 +17,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install Flutter
-      - name: Install Flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git -b stable --depth 1
-          export PATH="$PATH:`pwd`/flutter/bin"
-          flutter doctor
+      # Set up Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+
+      # Check Flutter version to ensure it's installed correctly
+      - name: Check Flutter version
+        run: flutter --version
 
       # Accept Android SDK licenses
       - name: Accept Android SDK licenses
@@ -32,10 +35,10 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Run flutter doctor
+      # Run flutter doctor to check for any issues
       - name: Run flutter doctor
         run: flutter doctor
 
-      # Build the Flutter project
+      # Build the Flutter project (you can modify for iOS, Android, etc.)
       - name: Build Flutter project
         run: flutter build ios
