@@ -1,4 +1,4 @@
-name: Build Unsigned iOS IPA
+name: Build iOS IPA
 
 on:
   push:
@@ -22,15 +22,11 @@ jobs:
     - name: Install Flet
       run: pip install flet
 
-    - name: Verify Xcode Installation
-      run: xcodebuild -version
-
-    - name: Build Unsigned IPA
-      run: flet build ipa --no-sign
+    - name: Build IPA
+      run: flet build ipa
 
     - name: Upload IPA Artifact
       uses: actions/upload-artifact@v3
       with:
         name: flet-app-ipa
         path: dist/*.ipa
-
