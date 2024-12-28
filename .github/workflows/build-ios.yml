@@ -22,6 +22,9 @@ jobs:
     - name: Install Flet
       run: pip install flet
 
+    - name: Verify Xcode Installation
+      run: xcodebuild -version
+
     - name: Build Unsigned IPA
       run: flet build ipa --no-sign
 
