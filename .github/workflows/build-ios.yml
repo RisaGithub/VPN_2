@@ -11,50 +11,37 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    
+
     steps:
       # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install Flutter manually in the user's home directory
-      - name: Set up Flutter manually
-        run: |
-          git clone https://github.com/flutter/flutter.git $HOME/flutter
-          echo "Flutter installed at $HOME/flutter"
-          echo "export PATH=\$PATH:\$HOME/flutter/bin" >> $GITHUB_ENV  # Add Flutter to PATH
-          source $GITHUB_ENV  # Ensure the new PATH is loaded
-          flutter doctor
+      # Setup Flutter with the official action
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable  # You can specify the version here
 
       # Accept Android SDK licenses
       - name: Accept Android SDK licenses
-        run: |
-          source $GITHUB_ENV  # Ensure the PATH is sourced
-          flutter doctor --android-licenses
+        run: flutter doctor --android-licenses
 
       # Install dependencies
       - name: Install dependencies
-        run: |
-          source $GITHUB_ENV  # Ensure the PATH is sourced
-          flutter pub get
+        run: flutter pub get
 
       # Run flutter create .
       - name: Run flutter create .
-        run: |
-          source $GITHUB_ENV  # Ensure the PATH is sourced
-          flutter create .
+        run: flutter create .
 
       # Run flutter doctor to check environment
       - name: Run flutter doctor
-        run: |
-          source $GITHUB_ENV  # Ensure the PATH is sourced
-          flutter doctor
+        run: flutter doctor
 
       # Build Flutter project
       - name: Build Flutter project
-        run: |
-          source $GITHUB_ENV  # Ensure the PATH is sourced
-          flutter build ios
+        run: flutter build ios
 
       # Upload build artifacts (optional)
       - name: Upload build artifacts
