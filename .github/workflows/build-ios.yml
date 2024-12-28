@@ -17,27 +17,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Flutter with the official action
+      # Set up Flutter manually and add to PATH
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: stable  # You can specify the version here
-
-      # Accept Android SDK licenses
-      - name: Accept Android SDK licenses
-        run: flutter doctor --android-licenses
-
-      # Install dependencies
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Run flutter create .
-      - name: Run flutter create .
-        run: flutter create .
-
-      # Run flutter doctor to check environment
-      - name: Run flutter doctor
-        run: flutter doctor
+        run: |
+          git clone https://github.com/flutter/flutter.git $HOME/flutter
+          echo "export PATH=\$PATH:\$HOME/flutter/bin" >> $GITHUB_ENV
+          source $GITHUB_ENV  # Ensure the new PATH is loaded
+          flutter doctor
+          flutter doctor --android-licenses
+          flutter pub get
+          flutter create .
 
       # Build Flutter project
       - name: Build Flutter project
