@@ -1,39 +1,44 @@
-name: Build iOS IPA
+name: Build iOS App
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-ios:
+  build:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
 
-    - name: Install Flutter
-      run: |
-        git clone https://github.com/flutter/flutter.git $HOME/flutter
-        echo "$HOME/flutter/bin" >> $GITHUB_PATH
-        source $HOME/flutter/bin/flutter
-        flutter doctor
+      - name: Install flet-cli
+        run: |
+          pip install flet-cli
 
-    - name: Install Flet
-      run: pip install flet
+      - name: Install Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git $HOME/flutter
+          echo "$HOME/flutter/bin" >> $GITHUB_PATH
 
-    - name: Build IPA
-      run: flet build ipa
+      - name: Set Flutter environment
+        run: |
+          flutter doctor
+          flutter doctor --android-licenses
 
-    - name: Upload IPA Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: flet-app-ipa
-        path: dist/*.ipa
+      - name: Install dependencies
+        run: |
+          flutter pub get
+
+      - name: Build iOS app
+        run: |
+          flet build ipa
