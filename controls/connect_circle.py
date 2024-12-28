@@ -8,7 +8,7 @@ class ConnectCircle(ft.Container):
         self.animate_func = animate_func
 
     def build(self):
-        self.CONNECT_CIRCLE_SIZE = self.page.height / 4
+        self.CONNECT_CIRCLE_SIZE = self.page.height / 3
 
         self.connect_status_control = ft.Text(
             "Подключиться", visible=False, size=self.CONNECT_CIRCLE_SIZE / 10
