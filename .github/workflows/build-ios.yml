@@ -23,6 +23,7 @@ jobs:
       run: |
         git clone https://github.com/flutter/flutter.git $HOME/flutter
         echo "$HOME/flutter/bin" >> $GITHUB_PATH
+        source $HOME/flutter/bin/flutter
         flutter doctor
 
     - name: Install Flet
