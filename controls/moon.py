@@ -6,7 +6,7 @@ class MoonControl(ft.Container):
         super().__init__(*args, **kwargs)
 
     def build(self):
-        size = self.page.height // 6
+        size = self.page.height // 5
         self.content = ft.Container(
             content=ft.Image(
                 src="images/moon.gif",
