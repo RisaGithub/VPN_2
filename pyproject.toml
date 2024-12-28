@@ -1,7 +1,8 @@
 [tool.poetry]
-name = "Lucky Hack | Vplus"
+name = "vpn-2"
 version = "0.1.0"
 description = ""
+authors = ["RisaGithub <anikat5@yandex.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -11,7 +12,3 @@ python = "^3.13"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-
-[tool.flet.macos]
-entitlement."com.apple.security.personal-information.photos-library" = true
