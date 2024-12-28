@@ -31,6 +31,10 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # Verify Flutter installation
+      - name: Verify Flutter version
+        run: flutter --version
+
       # Run flutter doctor to check environment
       - name: Run flutter doctor
         run: flutter doctor
