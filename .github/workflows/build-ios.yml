@@ -1,4 +1,4 @@
-name: Flutter CI
+name: Flet CI
 
 on:
   push:
@@ -10,38 +10,34 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest  # You can use macos-latest if needed
 
     steps:
       # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Flutter manually
-      - name: Install Flutter
-        run: |
-          # Install Flutter SDK manually
-          git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter
-          echo "$HOME/flutter/bin" >> $GITHUB_PATH
-
-      # Check Flutter version
-      - name: Check Flutter version
-        run: flutter --version
-
-      # Accept Android SDK licenses
-      - name: Accept Android SDK licenses
-        run: yes | flutter doctor --android-licenses
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # You can choose your preferred version
 
       # Install dependencies
       - name: Install dependencies
         run: |
-          cd path/to/your/flutter/project
-          flutter pub get
+          pip install -r requirements.txt
+          # If you have a specific dependency like flet, you can install it directly
+          pip install flet
 
-      # Run flutter doctor to check for any issues
-      - name: Run flutter doctor
-        run: flutter doctor
+      # Run tests (if any)
+      - name: Run tests
+        run: |
+          # Assuming you have a test suite, e.g., with pytest
+          pytest
 
-      # Build the Flutter project
-      - name: Build Flutter project
-        run: flutter build ios
+      # Run the app (optional, based on your requirements)
+      - name: Run Flet app
+        run: |
+          # Replace `main.py` with your app's entry file
+          python main.py
