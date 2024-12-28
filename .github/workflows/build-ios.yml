@@ -1,25 +1,41 @@
-name: Build Flutter APK
+name: Flutter CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y curl git
+      # Install Flutter
+      - name: Install Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1
+          export PATH="$PATH:`pwd`/flutter/bin"
+          flutter doctor
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: stable
+      # Accept Android SDK licenses
+      - name: Accept Android SDK licenses
+        run: yes | flutter doctor --android-licenses
 
-    - name: Install dependencies
-      run: flutter pub get
+      # Install dependencies
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Build APK
-      run: flutter build apk --release
+      # Run flutter doctor
+      - name: Run flutter doctor
+        run: flutter doctor
+
+      # Build the Flutter project
+      - name: Build Flutter project
+        run: flutter build ios
