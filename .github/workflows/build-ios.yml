@@ -1,4 +1,4 @@
-name: Flutter Build
+name: Flutter CI
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: stable  # Or specify a specific version like '3.7.0'
 
       # Accept Android SDK licenses
       - name: Accept Android SDK licenses
@@ -31,14 +31,10 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Verify Flutter installation
-      - name: Verify Flutter version
-        run: flutter --version
-
-      # Run flutter doctor to check environment
+      # Run flutter doctor
       - name: Run flutter doctor
         run: flutter doctor
 
-      # Build Flutter project
+      # Build the Flutter project
       - name: Build Flutter project
         run: flutter build ios
