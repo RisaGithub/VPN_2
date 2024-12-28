@@ -17,23 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Flutter with an explicit version
+      # Set up Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.7.0'  # Use a specific version instead of 'stable'
+          flutter-version: 'stable'
 
       # Accept Android SDK licenses
       - name: Accept Android SDK licenses
-        run: flutter doctor --android-licenses
+        run: yes | flutter doctor --android-licenses
 
       # Install dependencies
       - name: Install dependencies
         run: flutter pub get
-
-      # Run flutter create .
-      - name: Run flutter create .
-        run: flutter create .
 
       # Run flutter doctor to check environment
       - name: Run flutter doctor
@@ -42,10 +38,3 @@ jobs:
       # Build Flutter project
       - name: Build Flutter project
         run: flutter build ios
-
-      # Upload build artifacts (optional)
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ios-build
-          path: build/ios/iphoneos/Runner.app
