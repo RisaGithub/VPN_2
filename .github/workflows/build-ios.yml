@@ -1,4 +1,4 @@
-name: Build iOS IPA
+name: Build Unsigned iOS IPA
 
 on:
   push:
@@ -22,15 +22,13 @@ jobs:
     - name: Install Flet
       run: pip install flet
 
-    - name: Install Dependencies
+    - name: Install Command Line Tools
       run: |
-        brew install xcodes
-        sudo xcodes install --latest
-        sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+        sudo xcode-select --install
         xcodebuild -version
 
-    - name: Build IPA
-      run: flet build ipa
+    - name: Build Unsigned IPA
+      run: flet build ipa --no-sign
 
     - name: Upload IPA Artifact
       uses: actions/upload-artifact@v3
