@@ -35,3 +35,4 @@ jobs:
       with:
         name: flet-app-ipa
         path: dist/*.ipa
+        
