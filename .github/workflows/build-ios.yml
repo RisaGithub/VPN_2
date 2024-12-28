@@ -35,8 +35,8 @@ jobs:
       # Run tests (if any)
       - name: Run tests
         run: |
-          # Assuming you have a test suite, e.g., with pytest
-          pytest
+          # Explicitly specify the directory for tests, if they are located in 'tests'
+          pytest tests/  # Adjust 'tests/' to the actual directory containing tests
 
       # Run the app (optional, based on your requirements)
       - name: Run Flet app
