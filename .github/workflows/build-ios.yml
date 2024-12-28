@@ -21,29 +21,40 @@ jobs:
       - name: Set up Flutter manually
         run: |
           git clone https://github.com/flutter/flutter.git $HOME/flutter
-          echo "export PATH=\$PATH:\$HOME/flutter/bin" >> $GITHUB_ENV  # Add Flutter to PATH using GITHUB_ENV
+          echo "Flutter installed at $HOME/flutter"
+          echo "export PATH=\$PATH:\$HOME/flutter/bin" >> $GITHUB_ENV  # Add Flutter to PATH
           source $GITHUB_ENV  # Ensure the new PATH is loaded
           flutter doctor
 
       # Accept Android SDK licenses
       - name: Accept Android SDK licenses
-        run: flutter doctor --android-licenses
+        run: |
+          source $GITHUB_ENV  # Ensure the PATH is sourced
+          flutter doctor --android-licenses
 
       # Install dependencies
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          source $GITHUB_ENV  # Ensure the PATH is sourced
+          flutter pub get
 
       # Run flutter create .
       - name: Run flutter create .
-        run: flutter create .
+        run: |
+          source $GITHUB_ENV  # Ensure the PATH is sourced
+          flutter create .
 
       # Run flutter doctor to check environment
       - name: Run flutter doctor
-        run: flutter doctor
+        run: |
+          source $GITHUB_ENV  # Ensure the PATH is sourced
+          flutter doctor
 
       # Build Flutter project
       - name: Build Flutter project
-        run: flutter build ios
+        run: |
+          source $GITHUB_ENV  # Ensure the PATH is sourced
+          flutter build ios
 
       # Upload build artifacts (optional)
       - name: Upload build artifacts
