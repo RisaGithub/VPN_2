@@ -1,4 +1,4 @@
-name: Build iOS App
+name: Flutter Build
 
 on:
   push:
@@ -11,34 +11,37 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
+    
     steps:
+      # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      # Set up Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          python-version: '3.10'
+          flutter-version: 'stable'
 
-      - name: Install flet-cli
-        run: |
-          pip install flet-cli
+      # Accept Android SDK licenses
+      - name: Accept Android SDK licenses
+        run: flutter doctor --android-licenses
 
-      - name: Install Flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git $HOME/flutter
-          echo "$HOME/flutter/bin" >> $GITHUB_PATH
-
-      - name: Set Flutter environment
-        run: |
-          flutter doctor
-          flutter doctor --android-licenses
-
+      # Install dependencies
       - name: Install dependencies
-        run: |
-          flutter pub get
+        run: flutter pub get
 
-      - name: Build iOS app
-        run: |
-          flet build ipa
+      # Run Flutter Doctor to check environment
+      - name: Run flutter doctor
+        run: flutter doctor
+
+      # Run Flutter build
+      - name: Build Flutter project
+        run: flutter build ios
+
+      # Upload build artifacts (optional, if you want to upload the build output)
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-build
+          path: build/ios/iphoneos/Runner.app
