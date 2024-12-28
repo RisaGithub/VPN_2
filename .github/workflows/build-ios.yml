@@ -27,6 +27,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          # Install pytest if it's not in your requirements
+          pip install pytest
           # If you have a specific dependency like flet, you can install it directly
           pip install flet
 
