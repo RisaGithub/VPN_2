@@ -15,13 +15,17 @@ class ConnectView(ft.View):
         self.HIDDEN_CLOUDS_BOTTOM = - self.page.height // part
         self.SHOWN_CLOUDS_TOP = self.page.height - self.page.height // part
         self.SHOWN_CLOUDS_BOTTOM = -self.page.height // 40
-        
+
+        self.SHOWN_MOON_TOP = self.page.height // 11
+        self.HIDDEN_MOON_TOP = -self.page.height // 2
+        print(self.page.height)
+
         self.bgcolor = ft.colors.with_opacity(1, "#030611")
         self.horizontal_alignment = ft.CrossAxisAlignment.CENTER
         self.padding = 0
 
         self.moon_control = MoonControl(
-            opacity=0.7, top=-250, left=-30, animate_position=1000
+            opacity=0.7, top=self.HIDDEN_MOON_TOP, left=-30, animate_position=1000
         )
         self.clouds_control = CloudsControl(
             bottom=-self.HIDDEN_CLOUDS_BOTTOM, right=0, top=self.HIDDEN_CLOUDS_TOP, left=0, animate_position=1000
@@ -54,9 +58,9 @@ class ConnectView(ft.View):
 
     def animate(self, hide=False):
         if hide:
-            self.moon_control.top = -250
+            self.moon_control.top = self.HIDDEN_MOON_TOP
             self.clouds_control.top = self.HIDDEN_CLOUDS_TOP
         else:
-            self.moon_control.top = 80
+            self.moon_control.top = self.SHOWN_MOON_TOP
             self.clouds_control.bottom = self.SHOWN_CLOUDS_BOTTOM
             self.clouds_control.top = self.SHOWN_CLOUDS_TOP

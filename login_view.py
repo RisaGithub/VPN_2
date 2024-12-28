@@ -26,7 +26,7 @@ class LoginView(ft.View):
             ft.Container(
                 ft.Column(
                     [
-                        ft.Text("Добро пожаловать!", size=25, opacity=1),
+                        ft.Text("Добро пожаловать!", size=25, opacity=1, text_align=ft.TextAlign.CENTER),
                         ft.Text("Вход", size=25),
                         ft.Column(
                             [
