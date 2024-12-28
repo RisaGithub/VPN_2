@@ -17,11 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Flutter
+      # Set up Flutter manually by specifying the exact version
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: stable
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --single-branch
+          export PATH="$PWD/flutter/bin:$PATH"
 
       # Check Flutter version to ensure it's installed correctly
       - name: Check Flutter version
@@ -39,6 +39,6 @@ jobs:
       - name: Run flutter doctor
         run: flutter doctor
 
-      # Build the Flutter project (you can modify for iOS, Android, etc.)
+      # Build the Flutter project (modify as needed)
       - name: Build Flutter project
         run: flutter build ios
