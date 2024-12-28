@@ -17,11 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install Flutter manually
+      # Install Flutter manually in the user's home directory
       - name: Set up Flutter manually
         run: |
-          git clone https://github.com/flutter/flutter.git /opt/flutter
-          echo "$PATH:/opt/flutter/bin" >> $GITHUB_PATH
+          git clone https://github.com/flutter/flutter.git $HOME/flutter
+          echo "$HOME/flutter/bin" >> $GITHUB_PATH
           flutter doctor
 
       # Accept Android SDK licenses
@@ -32,7 +32,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Run Flutter Doctor to check environment
+      # Run flutter create . (initialize project)
+      - name: Run flutter create .
+        run: flutter create .
+
+      # Run flutter doctor to check environment
       - name: Run flutter doctor
         run: flutter doctor
 
