@@ -17,13 +17,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Flutter using the subosito/flutter-action@v2
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 'stable'  # Specify version or 'stable' here
+      # Set up Flutter manually
+      - name: Install Flutter
+        run: |
+          # Install Flutter SDK manually
+          git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter
+          echo "$HOME/flutter/bin" >> $GITHUB_PATH
 
-      # Verify Flutter installation
+      # Check Flutter version
       - name: Check Flutter version
         run: flutter --version
 
