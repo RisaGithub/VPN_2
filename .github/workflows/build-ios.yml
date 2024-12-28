@@ -22,9 +22,10 @@ jobs:
     - name: Install Flet
       run: pip install flet
 
-    - name: Install iOS Dependencies
+    - name: Install Dependencies
       run: |
-        brew install --cask xcode
+        brew install xcodes
+        sudo xcodes install --latest
         sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
         xcodebuild -version
 
